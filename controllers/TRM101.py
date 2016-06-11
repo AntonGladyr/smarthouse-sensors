@@ -5,7 +5,7 @@ from libs.TSystem import MySerial
 # OWEN ONLY
 class TRM101:
     def __init__(self):
-        COM = MySerial.ComPort(4, 9600, timeout=1)
+        COM = MySerial.ComPort('COM4', 9600, timeout=1)
         self.instrument = Owen.OwenDevice(COM, 17)
 
         # (address, type, description)

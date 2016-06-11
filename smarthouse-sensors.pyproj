@@ -27,6 +27,12 @@
     <Compile Include="controllers\TRM33.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="controllers\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="libs\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="mainloop.py">
       <SubType>Code</SubType>
     </Compile>

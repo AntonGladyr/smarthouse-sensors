@@ -7,7 +7,7 @@ class TRM101:
         COM = MySerial.ComPort(4, 9600, timeout=1)
         self.instrument = Owen.OwenDevice(COM, 17)
 
-        # (tag, description)
+        # (address, type, description)
         self.read_static_tags = [
             
         ]

@@ -19,8 +19,8 @@ class TRM33:
     def _readValues(tags):
         result = {'values': [], 'descriptions': []}
         for tag in tags:
-            result['values'].append(self.instrument.read_register(tag[0], tag[1], tag[2]))
-            result['descriptions'].append(tag[3])
+            # TODO: Modbus read valeus
+            pass
         return result
 
     def readStaticValues(self):

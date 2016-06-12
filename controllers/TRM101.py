@@ -163,6 +163,8 @@ class TRM101:
                 result['values'].append(self.instrument.GetString(tag[0]))
             elif tag[1] == 'unsigned short int':
                 result['values'].append(self.instrument.GetInt16(tag[0]))
+            else:
+                result['values'].append('read error')
 
         return result
 

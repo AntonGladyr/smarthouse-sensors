@@ -2,6 +2,7 @@
 from libs.TOwen import Owen
 from libs.TSystem import MySerial
 
+
 # OWEN ONLY
 class TRM101:
     def __init__(self):
@@ -83,7 +84,7 @@ class TRM101:
                                                                            # o	  ->  1
             ['LBA', 'unsigned short int', 'Diagnosis time of open circuit'],
             ['LbAb', '', 'Band width of diagnosis time of open circuit'],
-            
+
             # network settings of device
             #----------- Network settings of device --------------------------
             ['Addr', 'unsigned short int', 'The base address of the device on the network'],
@@ -101,7 +102,7 @@ class TRM101:
                                                                           # 57.6   ->   7
                                                                           # 115.2  ->   8
             #----------- Network settings of device --------------------------
-             
+
             #----------- Group service parameters ----------------------------
             ['LEn', 'unsigned byte', 'Data word length'], # 8  ->  1
             ['PrtY', 'unsigned byte', 'Status bit parity in the parcel'], # nonE  ->  0
@@ -113,7 +114,7 @@ class TRM101:
             ['N.err', 'unsigned short int', ''], # Код сетевой ошибки при последнем обращении:
                                                  # 0х06 - Значение мантиссы превышает ограничения дескриптора
                                                  # 0x08 - У запрошенного параметра отсутствуют атрибуты
-                                                 # 0х28   –  Не найден дескриптор 
+                                                 # 0х28   –  Не найден дескриптор
                                                  # 0х31   –  Размер поля данных не соответствует  ожидаемому
                                                  # 0х32   – Значение бита запроса не соответствует  ожидаемому
                                                  # 0х33   –  Редактирование параметра запрещено  индивидуальным атрибутом
@@ -122,15 +123,15 @@ class TRM101:
                                                  #           (Редактирование параметра заблокировано  значением другого или значениями нескольких  других)
                                                  # 0х48   –  Ошибка при чтении EEPROM (ответ при наличии Er.64)
             #----------- Group service parameters --------------------------
-            
+
             #----------- Teams set attributes ------------------------------
             ['Attr', '', 'To read / write attribute of "editing"'],
             #----------- Teams set attributes ------------------------------
-            
+
             #----------- Group LmAn (manual control) -----------------------  Виден при  CNTL = PID, R−S = RUN, AT = STOP
             ['o-Ed', 'float24', 'Set point of output power'],
             #----------- Group LmAn (manual control) -----------------------
-            
+
             #----------- privacy settings -----------------------   (группа скрыта под паролем PASS=100)
             ['EdPt', 'unsigned byte', 'Protecting the individual parameters of the review and the changes(enable or disable the action attribute)']
             #----------- privacy settings -----------------------
@@ -143,17 +144,30 @@ class TRM101:
                                                                                             # (Answer in the presence of Er.64)
             ['o', 'float24', 'Output power of PID.'],
             ['o.', 'float24', 'The current value of the output PID']
-        ]   
-    
+        ]
+
     def _readValues(self, tags):
         result = {'values': [], 'descriptions': []}
+
         for tag in tags:
-            # TODO: Owen read values
-            pass
+
+            # Description
+            result['descriptions'].append(tag[2])
+
+            # Value
+            if tag[1] == 'float24':
+                result['values'].append(self.instrument.GetIEEE32(tag[0]))
+            elif tag[1] == 'unsigned byte':
+                result['values'].append(self.instrument.GetInt16(tag[0]))
+            elif tag[1] == 'ASCII':
+                result['values'].append(self.instrument.GetString(tag[0]))
+            elif tag[1] == 'unsigned short int':
+                result['values'].append(self.instrument.GetInt16(tag[0]))
+
         return result
 
     def readStaticValues(self):
-        pass
+        return self._readValues(self.read_static_tags)
 
     def readDynamicValues(self):
-        pass
+        return self._readValues(self.read_dynamic_tags)

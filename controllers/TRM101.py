@@ -147,24 +147,26 @@ class TRM101:
         ]
 
     def _readValues(self, tags):
-        result = {'values': [], 'descriptions': []}
+        result = {}
 
-        for tag in tags:
+        for namespace, tag in tags.items():
+            if namespace not in result.keys():
+                result[namespace] = {'descriptions': [], 'values': []}
 
             # Description
-            result['descriptions'].append(tag[2])
+            result[namespace]['descriptions'].append(tag[2])
 
             # Value
             if tag[1] == 'float24':
-                result['values'].append(self.instrument.GetIEEE32(tag[0]))
+                result[namespace]['values'].append(self.instrument.GetIEEE32(tag[0]))
             elif tag[1] == 'unsigned byte':
-                result['values'].append(self.instrument.GetInt16(tag[0]))
+                result[namespace]['values'].append(self.instrument.GetInt16(tag[0]))
             elif tag[1] == 'ASCII':
-                result['values'].append(self.instrument.GetString(tag[0]))
+                result[namespace]['values'].append(self.instrument.GetString(tag[0]))
             elif tag[1] == 'unsigned short int':
-                result['values'].append(self.instrument.GetInt16(tag[0]))
+                result[namespace]['values'].append(self.instrument.GetInt16(tag[0]))
             else:
-                result['values'].append('read error')
+                result[namespace]['values'].append('read error')
 
         return result
 

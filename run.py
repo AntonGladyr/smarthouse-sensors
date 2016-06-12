@@ -7,7 +7,7 @@ from ws import WebSocket
 from mainloop import mainloop
 from onstart import onstart
 
-HOST = "ws://smarthouse.onlini.co:3389"
+HOST = "ws://smarthouse.php.onlini.co:3389"
 
 controllers = {
     'TRM101': TRM101(),

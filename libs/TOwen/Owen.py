@@ -546,17 +546,17 @@ class OwenDevice:
         hash = self.TakeHashFrom(hashOrName)        
         if self.serialPort == None:
             self.TestResponseString = self.__TestResponseStringForIEEE32          
-        answerLength = 4        
+        answerLength = 4
         if withTime:
             answerLength += 2
         if withIndex:
             answerLength += 2            
         result = self.GetPingPong(hash,addrOffset,answerLength) # для скорости задаём число принимаемых байтов
-        #result = self.GetPingPong(hash,addrOffset)        
+        #result = self.GetPingPong(hash,addrOffset)
         if withTime or withIndex:
-            return self.owenProtocol.unpackIEEE32(withIndex,withTime)
+            return self.owenProtocol.unpackFloat24(withIndex,withTime)
         else:
-            return self.owenProtocol.unpackIEEE32(withIndex,withTime)['value']
+            return self.owenProtocol.unpackFloat24(withIndex,withTime)['value']
                 
         
     def GetString(self,hashOrName,addrOffset=0, withTime = False, withIndex = False):#возвращает строку по хэшу или имени,, addrOffset - смещение относительно базового адреса

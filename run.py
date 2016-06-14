@@ -7,11 +7,12 @@ from ws import WebSocket
 from mainloop import mainloop
 from onstart import onstart
 
-HOST = "ws://smarthouse.php.onlini.co:3389"
+HOST = "ws://10.1.212.78:3389"
 
 controllers = {
+    'TRM33': TRM33(),
     'TRM101': TRM101(),
-    'TRM33': TRM33()
+
 }
 
 websocket = WebSocket(HOST, controllers)

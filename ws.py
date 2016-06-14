@@ -11,3 +11,6 @@ class WebSocket:
 
     def run(self):
         self.ws.run_forever()
+
+    def send(self, msg):
+        self.ws.send(msg)

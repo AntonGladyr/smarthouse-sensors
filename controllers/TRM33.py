@@ -1,11 +1,17 @@
 import minimalmodbus
+import serial
+minimalmodbus.CLOSE_PORT_AFTER_EACH_CALL = True
 
 
 # MODBUS & OWEN
 class TRM33:
     def __init__(self):
-        self.instrument = minimalmodbus.Instrument("COM4", 17)
-        self.instrument.close_port_after_each_call = True
+        self.instrument = minimalmodbus.Instrument("COM4", 18)
+        self.instrument.mode = minimalmodbus.MODE_RTU
+        self.instrument.serial.baudrate = 9600
+        self.instrument.serial.bytesize = 8
+        self.instrument.serial.parity = serial.PARITY_NONE
+        self.instrument.serial.stopbits = 1
 
         # (address, num of decimals, function code, description)
         self.read_static_tags = {

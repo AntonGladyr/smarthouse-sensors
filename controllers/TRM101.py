@@ -6,7 +6,7 @@ from libs.TSystem import MySerial
 # OWEN ONLY
 class TRM101:
     def __init__(self):
-        COM = MySerial.ComPort('COM4', 9600, timeout=1)
+        COM = MySerial.ComPort('COM4', 9600, timeout=0.06)
         self.instrument = Owen.OwenDevice(COM, 17)
 
         # (address, type, description)
@@ -58,7 +58,7 @@ class TRM101:
                                                                       # n-C	->  2
             ['ALt', 'unsigned byte', 'Type comparator logic'],
             ['AL-d', 'float24', 'Comparator threshold'],
-            ['AL-Н', 'float24', 'Comparator hysteresis'],
+            ['AL-H', 'float24', 'Comparator hysteresis'],
             ['orEU', 'unsigned byte', 'Type in the regulation control'], # or-r	 ->  0
                                                                          # or-d	 ->  1
             ['CP', 'unsigned byte', 'The repetition period of the control pulses'],
@@ -111,7 +111,7 @@ class TRM101:
             ['Dev', 'ASCII', 'Device Type'],
             ['APLY', '', 'Team transition to the new network settings'],
             ['INIT', '', 'Team reboot the device. Equivalent off / on power'],
-            ['N.err', 'unsigned short int', ''], # Код сетевой ошибки при последнем обращении:
+            ['N.err', 'unsigned short int', 'Error'], # Код сетевой ошибки при последнем обращении:
                                                  # 0х06 - Значение мантиссы превышает ограничения дескриптора
                                                  # 0x08 - У запрошенного параметра отсутствуют атрибуты
                                                  # 0х28   –  Не найден дескриптор
@@ -137,41 +137,57 @@ class TRM101:
             #----------- privacy settings -----------------------
         ]
 
-        self.read_dynamic_tags = [
+        self.read_dynamic_tags = {
+            'air': [
             ['PV', 'float24', 'The measured value of the input variable or an error code'], # - 0xFD-error at the input
                                                                                             # - 0xFE - lack of communication with the ADC
                                                                                             # - 0xF0 - the calculated value is certainly not true
                                                                                             # (Answer in the presence of Er.64)
             ['o', 'float24', 'Output power of PID.'],
-            ['o.', 'float24', 'The current value of the output PID']
-        ]
+            ['o.', 'float24', 'The current value of the output PID'] ]
+        }
 
     def _readValues(self, tags):
-        result = {}
+        pass
 
-        for namespace, tag in tags.items():
-            if namespace not in result.keys():
-                result[namespace] = {'descriptions': [], 'values': []}
+    def readStaticValues(self):
+        result = {'descriptions': [], 'values': []}
+        for tag in self.read_static_tags:
 
             # Description
-            result[namespace]['descriptions'].append(tag[2])
+            result['descriptions'].append(tag[2])
 
             # Value
             if tag[1] == 'float24':
-                result[namespace]['values'].append(self.instrument.GetIEEE32(tag[0]))
+                result['values'].append(self.instrument.GetIEEE32(tag[0]))
             elif tag[1] == 'unsigned byte':
-                result[namespace]['values'].append(self.instrument.GetInt16(tag[0]))
+                result['values'].append(self.instrument.GetInt16(tag[0]))
             elif tag[1] == 'ASCII':
-                result[namespace]['values'].append(self.instrument.GetString(tag[0]))
+                result['values'].append(self.instrument.GetString(tag[0]).decode('cp1251'))
             elif tag[1] == 'unsigned short int':
-                result[namespace]['values'].append(self.instrument.GetInt16(tag[0]))
+                result['values'].append(self.instrument.GetInt16(tag[0]))
             else:
-                result[namespace]['values'].append('read error')
-
+                result['values'].append('read error')
         return result
 
-    def readStaticValues(self):
-        return self._readValues(self.read_static_tags)
-
     def readDynamicValues(self):
-        return self._readValues(self.read_dynamic_tags)
+        result = {}
+
+        for namespace, tags in self.read_dynamic_tags.iteritems():
+            result[namespace] = {'values': [], 'descriptions': []}
+            for tag in tags:
+                # Description
+                result[namespace]['descriptions'].append(tag[2])
+
+                # Value
+                if tag[1] == 'float24':
+                    result[namespace]['values'].append(self.instrument.GetIEEE32(tag[0]))
+                elif tag[1] == 'unsigned byte':
+                    result[namespace]['values'].append(self.instrument.GetInt16(tag[0]))
+                elif tag[1] == 'ASCII':
+                    result[namespace]['values'].append(self.instrument.GetString(tag[0]).decode('cp1251'))
+                elif tag[1] == 'unsigned short int':
+                    result[namespace]['values'].append(self.instrument.GetInt16(tag[0]))
+                else:
+                    result[namespace]['values'].append('read error')
+        return result

@@ -13,4 +13,6 @@ def onstart(ws, controllers):
         }
     }
 
-    ws.send(json.dumps(request))
+    data = json.dumps(request, ensure_ascii=False)
+    ws.send(data)
+    print data

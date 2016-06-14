@@ -7,24 +7,30 @@ class TRM33:
         self.instrument = minimalmodbus.Instrument("COM4", 17)
         self.instrument.close_port_after_each_call = True
 
-
         # (address, num of decimals, function code, description)
-        self.read_static_tags = [
-            
-        ]
-        self.read_dynmaic_tags = [
+        self.read_static_tags = {
 
-        ]
+        }
 
-    def _readValues(tags):
-        result = {'values': [], 'descriptions': []}
-        for tag in tags:
-            # TODO: Modbus read valeus
-            pass
+        self.read_dynamic_tags = {
+
+        }
+
+    def _readValues(self, tags):
+        result = {}
+
+        for namespace, tag in tags.items():
+            if namespace not in result.keys():
+                result[namespace] = {'descriptions': [], 'values': []}
+
+            # Descriptions result[namespace]['descriptions']
+
+            # Values result[namespace]['values']
+
         return result
 
     def readStaticValues(self):
-        return _readValues(self.read_static_tags)
+        return self._readValues(self.read_static_tags)
 
-    def readDynmaicValues(self):
-        return _readValues(self.read_dynmaic_tags)
+    def readDynamicValues(self):
+        return self._readValues(self.read_dynamic_tags)

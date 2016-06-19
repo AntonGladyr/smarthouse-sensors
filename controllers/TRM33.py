@@ -62,6 +62,19 @@ class TRM33:
             [0x0103, 'Word_16', 'Code communication device with a computer'],
             [0x0104, 'Word_16', 'The time delay of the signal "Alarm" on the C2 entry when the fan is started'],
 
+            [0x0200, 'Word_16', 'Correction value for Toutdoor'],
+            [0x0201, 'Word_16', 'Correction value for Tобр'],
+            [0x0202, 'Word_16', 'The correction value for the supply air.'],
+            [0x0203, 'Word_16', 'The value of "filter strips" for the outside'],
+            [0x0204, 'Word_16', 'The value of "filter time constant" for Tout'],
+            [0x0205, 'Word_16', 'The value of "filter strips" for Tобр'],
+            [0x0206, 'Word_16', 'The value of "filter time constant" for Tобр'],
+            [0x0207, 'Word_16', 'The value of "filter strips" for Tsupply'],
+            [0x0208, 'Word_16', 'The value of "filter time constant" for the Tsupply'],
+            [0x0300, 'Word_16', 'The numerical value of S'],  #Remote Control КЗР
+            [0x0301, 'Word_16', 'The coefficient τ for control'],
+            [0x0302, 'Word_16', 'The value of the coefficient K for the controller'],
+            [0x0303, 'Word_16', 'Warm-up Time heater'],
 
             [0x02BC, 'Float_32/multipleRegisters', 'The numerical offset value (Δmax)'],
             [0x02C0, 'Float_32/multipleRegisters', 'The value of the supply air temperature (product)'],

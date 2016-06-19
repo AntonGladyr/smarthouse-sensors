@@ -12,15 +12,35 @@ static = {
     'type': 'sensors/init',
     'data': {
     	'air': {
-    		'TRM101': {
-    			'descriptions': ['testazazazazazazazaz','test','test','test','test','test','test'],
-    			'values': [1,2,1,2,1,2,1]
+    	    'TRM101': {
+    		'descriptions': ['testazazazazazazazaz','test','test','test','test','test','test'],
+    		'values': [1,2,1,2,1,2,1]
     		},
-                'TRM33': {
-    			'descriptions': ['test','test','test','test','test','test','test'],
-    			'values': [1,2,1,2,1,2,1]
-                }
-    	}
+            'TRM33': {
+    		'descriptions': ['test','test','test','test','test','test','test'],
+    		'values': [1,2,1,2,1,2,1]
+            }
+    	},
+        'power': {
+            'GD10': {
+    		'descriptions': ['testazazazazazazazaz','test','test','test','test','test','test'],
+    		'values': [1,2,1,2,1,2,1]
+            },
+            'DMK32': {
+    		'descriptions': ['testazazazazazazazaz','test','test','test','test','test','test'],
+    		'values': [1,2,1,2,1,2,1]
+            }
+        },
+        'water': {
+            'SI8': { 
+    		'descriptions': ['testazazazazazazazaz','test','test','test','test','test','test'],
+    		'values': [1,2,1,2,1,2,1]
+            },
+            'TRM33': {
+    		'descriptions': ['testazazazazazazazaz','test','test','test','test','test','test'],
+    		'values': [1,2,1,2,1,2,1]
+            }
+        }
     }
     
 }
@@ -45,7 +65,35 @@ while True:
                         round(random.uniform(20.0, 40.0), 3),
                         round(random.uniform(20.0, 40.0), 3),]
                 }
-    	    }
+    	    },
+            'power': {
+    	    	'TRM101': {
+    		    'descriptions': ['test','test','test'],
+    		    'values': [round(random.uniform(20.0, 40.0), 3),
+                        round(random.uniform(20.0, 40.0), 3),
+                        round(random.uniform(20.0, 40.0), 3),]
+    		},
+                'TRM33': {
+    		    'descriptions': ['test','test','test'],
+    		    'values': [round(random.uniform(20.0, 40.0), 3),
+                        round(random.uniform(20.0, 40.0), 3),
+                        round(random.uniform(20.0, 40.0), 3),]
+                } 
+            },
+            'water': {
+    	    	'TRM101': {
+    		    'descriptions': ['test','test','test'],
+    		    'values': [round(random.uniform(20.0, 40.0), 3),
+                        round(random.uniform(20.0, 40.0), 3),
+                        round(random.uniform(20.0, 40.0), 3),]
+    		},
+                'TRM33': {
+    		    'descriptions': ['test','test','test'],
+    		    'values': [round(random.uniform(20.0, 40.0), 3),
+                        round(random.uniform(20.0, 40.0), 3),
+                        round(random.uniform(20.0, 40.0), 3),]
+                }
+            }
         }
     }
     ws.send(json.dumps(dynamic))

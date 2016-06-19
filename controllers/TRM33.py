@@ -41,6 +41,28 @@ class TRM33:
             [0x03B2, 'Word_16', 'device address'],  # read/write  1...247
             [0x0478, 'Word_16', 'Recording changes in EEPROM and restructuring UART'],  # only write
 
+            [0x0000, 'Word_16', 'The numerical offset value (max) on the schedule Т.обо.го (out.)'],
+            [0x0001, 'Word_16', 'The numerical offset value (min) on the schedule Т.обо.го (out.)'],
+            [0x0002, 'Word_16', 'The value of the supply air temperature (Tavar.), Below which the system to frost protection mode'],
+            [0x0003, 'Word_16', 'The value of the supply air temperature setpoint'],
+            [0x0004, 'Word_16', 'The value of the outside temperature (summer.), In which the system to summer operation'],
+            [0x0005, 'Word_16', 'The temperature Toбp. (A) schedule'],
+            [0x0006, 'Word_16', 'The temperature Toбp. (A) schedule'],
+            [0x0007, 'Word_16', 'The temperature Toбp. (B) schedule'],
+            [0x0008, 'Word_16', 'The temperature Toбp. (B) schedule'],
+            [0x0009, 'Word_16', 'The temperature Toбp. (C) schedule'],
+            [0x000A, 'Word_16', 'The temperature Toбp. (C) schedule'],
+            [0x000B, 'Word_16', 'The value of the dead zone in the control loop'],
+            [0x0100, 'Word_16', 'Input Type TC'],    # Хх01 – ТСМ (α = 0,00426 °С -1)
+                                                     # Хх02 – ТСП (α = 0,00385 °С -1)
+                                                     # Хх03 – ТСП (α = 0,00391 °С -1)
+                                                     # Хх04 – ТСМ (α = 0,00428 °С -1)
+            [0x0101, 'Word_16', 'Input Type TC'],
+            #[0x0102, 'Word_16', ''],
+            [0x0103, 'Word_16', 'Code communication device with a computer'],
+            [0x0104, 'Word_16', 'The time delay of the signal "Alarm" on the C2 entry when the fan is started'],
+
+
             [0x02BC, 'Float_32/multipleRegisters', 'The numerical offset value (Δmax)'],
             [0x02C0, 'Float_32/multipleRegisters', 'The value of the supply air temperature (product)'],
             [0x02C4, 'Float_32/multipleRegisters', 'Setpoint for supply air'],
